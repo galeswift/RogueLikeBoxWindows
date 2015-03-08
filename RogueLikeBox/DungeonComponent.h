@@ -23,6 +23,7 @@ public:
     void SetDimensions(const sf::Vector2i& dimensions);
     void SetPos(const sf::Vector2i& pos);
     const sf::RectangleShape* GetShape() { return &m_renderShape; }
+    const sf::FloatRect* GetGlobalBounds() { return &m_globalBounds; }
     void AddForce(const sf::Vector2i& force);
     
 private:
@@ -31,6 +32,7 @@ private:
     sf::Vector2i m_dimensions;
     sf::Vector2i m_pos; // gridPos
     sf::Vector2i m_velocity;
+    sf::FloatRect m_globalBounds;
 };
 
 class DungeonComponent : public Component
@@ -55,6 +57,12 @@ public:
     };
     
     class DungeonGenerationState_Separate : public DungeonGenerationState
+    {
+    public:
+        virtual void Update(float dt);
+    };
+    
+    class DungeonGenerationState_Triangulate : public DungeonGenerationState
     {
     public:
         virtual void Update(float dt);

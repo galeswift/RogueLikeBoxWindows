@@ -12,11 +12,11 @@
 #include "Game.h"
 
 IMPLEMENT_COMPONENT(DungeonComponent);
-#define CELL_THICKNESS 10
-#define CELL_COUNT_MIN 100
-#define CELL_COUNT_MAX 150
+#define CELL_THICKNESS 4
+#define CELL_COUNT_MIN 200
+#define CELL_COUNT_MAX 450
 #define CELL_MEAN 15
-#define CELL_RANGE 4
+#define CELL_RANGE 5
 #define CELL_ROOM_MIN (CELL_MEAN * 0.9)
 
 Cell::Cell() :
@@ -36,9 +36,13 @@ void Cell::Update(float dt)
     m_pos.x += m_velocity.x;
     m_pos.y += m_velocity.y;
     
+    if (m_velocity.x != 0 || m_velocity.y != 0)
+    {
+        __UpdateRenderShape();
+    }
+    
     m_velocity.x = 0;
     m_velocity.y = 0;
-    __UpdateRenderShape();
 }
 
 void Cell::Draw(sf::RenderWindow* window)
@@ -75,6 +79,7 @@ void Cell::__UpdateRenderShape()
     }
    
     m_renderShape.setOutlineThickness(5);
+    m_globalBounds = m_renderShape.getGlobalBounds();
 }
 
 void DungeonComponent::DungeonGenerationState_Init::Init(DungeonComponent* comp)
@@ -87,7 +92,7 @@ void DungeonComponent::DungeonGenerationState_Init::Init(DungeonComponent* comp)
         comp->m_cells.emplace_back();
         
         sf::Vector2i dimensions(sf::Vector2i(Random::NextNormal<float>(CELL_MEAN,CELL_RANGE), Random::NextNormal<float>(CELL_MEAN,CELL_RANGE)));
-        sf::Vector2i pos(sf::Vector2i(Random::Next(0, 0), Random::Next(0,0)));
+        sf::Vector2i pos(sf::Vector2i(Random::Next(-100, 100), Random::Next(-100,100)));
         comp->m_cells[i].SetDimensions(dimensions);
         comp->m_cells[i].SetPos(pos);
     }
@@ -97,9 +102,12 @@ void DungeonComponent::DungeonGenerationState_Init::Init(DungeonComponent* comp)
 
 void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
 {
-    for (int i=0 ; i<m_owner->m_cells.size() ; i++)
+    bool finished = true;
+    size_t sizeA = m_owner->m_cells.size();
+    size_t sizeB = m_owner->m_cells.size();
+    for (int i=0 ; i<sizeA; i++)
     {
-        for (int j=0 ; j<m_owner->m_cells.size() ; j++)
+        for (int j=0 ; j<sizeB ; j++)
         {
             if (i==j)
             {
@@ -110,11 +118,11 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
                 const sf::RectangleShape* a = m_owner->m_cells[i].GetShape();
                 const sf::RectangleShape* b = m_owner->m_cells[j].GetShape();
                 
-                sf::FloatRect otherBounds = b->getGlobalBounds();
-                //otherBounds.height *= 1.5f;
-                //otherBounds.width *= 1.5f;
-                if (a->getGlobalBounds().intersects(otherBounds))
+                const sf::FloatRect* myBounds = m_owner->m_cells[i].GetGlobalBounds();
+                const sf::FloatRect* otherBounds = m_owner->m_cells[j].GetGlobalBounds();
+                if (myBounds->intersects(*otherBounds))
                 {
+                    finished = false;
                     sf::Vector2f fromCell = VectorMath::Sub(b->getOrigin(), a->getOrigin());
                     sf::Vector2f fromCellN = VectorMath::Normalize(fromCell);
                     float fromCellMag = VectorMath::Mag(fromCell);
@@ -138,14 +146,24 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
                     
                     if (fromCell.x == 0 && fromCell.y ==0)
                     {
-                        force.x = Random::Next(-1,1);
-                        force.y = Random::Next(-1,1);
+                        force.x = -1;
+                        force.y = 1;
                     }
                     m_owner->m_cells[i].AddForce(force);
                 }
             }
         }
     }
+    
+    if (finished)
+    {
+        m_owner->SetState(new DungeonGenerationState_Triangulate());
+    }
+}
+
+void DungeonComponent::DungeonGenerationState_Triangulate::Update(float dt)
+{
+    
 }
 
 DungeonComponent::DungeonComponent() :
