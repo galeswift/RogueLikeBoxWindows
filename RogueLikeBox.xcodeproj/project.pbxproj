@@ -70,6 +70,9 @@
 		53D0F4441AA2C60300B12F80 /* RenderingSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53D0F4421AA2C60300B12F80 /* RenderingSystem.cpp */; };
 		53D0F4471AA2D52D00B12F80 /* ComponentPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53D0F4451AA2D52D00B12F80 /* ComponentPool.cpp */; };
 		53D0F44A1AA2DD9700B12F80 /* Box2DComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53D0F4481AA2DD9700B12F80 /* Box2DComponent.cpp */; };
+		53D0F44D1AA38B4800B12F80 /* DungeonComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53D0F44B1AA38B4800B12F80 /* DungeonComponent.cpp */; };
+		53D0F4501AA38B8300B12F80 /* DungeonSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53D0F44E1AA38B8300B12F80 /* DungeonSystem.cpp */; };
+		53D0F4531AA6E04300B12F80 /* VectorMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53D0F4511AA6E04300B12F80 /* VectorMath.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -194,6 +197,12 @@
 		53D0F4461AA2D52D00B12F80 /* ComponentPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentPool.h; sourceTree = "<group>"; };
 		53D0F4481AA2DD9700B12F80 /* Box2DComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2DComponent.cpp; sourceTree = "<group>"; };
 		53D0F4491AA2DD9700B12F80 /* Box2DComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DComponent.h; sourceTree = "<group>"; };
+		53D0F44B1AA38B4800B12F80 /* DungeonComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DungeonComponent.cpp; sourceTree = "<group>"; };
+		53D0F44C1AA38B4800B12F80 /* DungeonComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DungeonComponent.h; sourceTree = "<group>"; };
+		53D0F44E1AA38B8300B12F80 /* DungeonSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DungeonSystem.cpp; sourceTree = "<group>"; };
+		53D0F44F1AA38B8300B12F80 /* DungeonSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DungeonSystem.h; sourceTree = "<group>"; };
+		53D0F4511AA6E04300B12F80 /* VectorMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VectorMath.cpp; sourceTree = "<group>"; };
+		53D0F4521AA6E04300B12F80 /* VectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorMath.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +236,12 @@
 		531BD5191A9449D300038EB3 /* RogueLikeBox */ = {
 			isa = PBXGroup;
 			children = (
+				53D0F4511AA6E04300B12F80 /* VectorMath.cpp */,
+				53D0F4521AA6E04300B12F80 /* VectorMath.h */,
+				53D0F44E1AA38B8300B12F80 /* DungeonSystem.cpp */,
+				53D0F44F1AA38B8300B12F80 /* DungeonSystem.h */,
+				53D0F44B1AA38B4800B12F80 /* DungeonComponent.cpp */,
+				53D0F44C1AA38B4800B12F80 /* DungeonComponent.h */,
 				53D0F4481AA2DD9700B12F80 /* Box2DComponent.cpp */,
 				53D0F4491AA2DD9700B12F80 /* Box2DComponent.h */,
 				53D0F4451AA2D52D00B12F80 /* ComponentPool.cpp */,
@@ -543,6 +558,7 @@
 				53D0F4411AA188E300B12F80 /* Entity.cpp in Sources */,
 				53CE3F5A1A95B1D700D5C897 /* b2FrictionJoint.cpp in Sources */,
 				53CE3F621A95B1D700D5C897 /* b2RopeJoint.cpp in Sources */,
+				53D0F44D1AA38B4800B12F80 /* DungeonComponent.cpp in Sources */,
 				53CE3F3A1A95B1D700D5C897 /* b2CollideEdge.cpp in Sources */,
 				53CE3F691A95B6F000D5C897 /* Game.cpp in Sources */,
 				53D0F43B1AA1887C00B12F80 /* System.cpp in Sources */,
@@ -558,6 +574,7 @@
 				53CE3F3F1A95B1D700D5C897 /* b2TimeOfImpact.cpp in Sources */,
 				53CE3F391A95B1D700D5C897 /* b2CollideCircle.cpp in Sources */,
 				53CE3F631A95B1D700D5C897 /* b2WeldJoint.cpp in Sources */,
+				53D0F4531AA6E04300B12F80 /* VectorMath.cpp in Sources */,
 				53CE3F3D1A95B1D700D5C897 /* b2Distance.cpp in Sources */,
 				53CE3F4F1A95B1D700D5C897 /* b2WorldCallbacks.cpp in Sources */,
 				53CE3F471A95B1D700D5C897 /* b2Settings.cpp in Sources */,
@@ -569,6 +586,7 @@
 				53D0F4441AA2C60300B12F80 /* RenderingSystem.cpp in Sources */,
 				531BD51D1A9449D300038EB3 /* ResourcePath.mm in Sources */,
 				53CE3F4D1A95B1D700D5C897 /* b2Island.cpp in Sources */,
+				53D0F4501AA38B8300B12F80 /* DungeonSystem.cpp in Sources */,
 				53CE3F591A95B1D700D5C897 /* b2DistanceJoint.cpp in Sources */,
 				53CE3F491A95B1D700D5C897 /* b2Timer.cpp in Sources */,
 				53CE3F3E1A95B1D700D5C897 /* b2DynamicTree.cpp in Sources */,
@@ -680,6 +698,7 @@
 		531BD52D1A9449D300038EB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/,
 					"$(inherited)",
@@ -694,6 +713,7 @@
 		531BD52E1A9449D300038EB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/,
 					"$(inherited)",

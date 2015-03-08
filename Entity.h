@@ -42,10 +42,12 @@ public:
     void AddComponent(Component* comp)
     {
         m_components.push_back(comp);
+        comp->Init(this);
     }
     
 private:
     std::vector<Component*> m_components;
 };
+
 
 #endif /* defined(__RogueLikeBox__Entity__) */

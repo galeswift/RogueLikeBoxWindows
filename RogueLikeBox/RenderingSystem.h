@@ -22,6 +22,7 @@ public:
 private:
     bool m_viewInitialized;
     sf::View m_defaultView;
+    float m_currentZoom;
 };
 
 #endif /* defined(__RogueLikeBox__RenderingSystem__) */

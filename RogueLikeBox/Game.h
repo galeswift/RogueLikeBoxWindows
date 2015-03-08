@@ -11,12 +11,10 @@
 
 #include <stdio.h>
 #include <vector>
+#include <random>
 #include <SFML/Graphics.hpp>
 
 #include "Components.h"
-
-#define RAD_TO_DEG (57.2957795)
-#define DEG_TO_RAD (1/RAD_TO_DEG)
 
 class System;
 class Entity;
@@ -27,9 +25,19 @@ public:
     template<class T>
     static T Next(T min, T max)
     {
-        float normalized = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-        return (normalized * (max + 1 -min)) + min;
+        std::uniform_int_distribution<T> uniform_dist(min, max);
+        return uniform_dist(s_re);
     }
+    
+    template<class T>
+    static T NextNormal(T mean, T range)
+    {
+        std::normal_distribution<T> distribution(mean,range);
+        return distribution(s_re);
+    }
+    
+    static std::random_device s_rd;
+    static std::linear_congruential_engine<std::uint_fast32_t, 48271, 0, 2147483647> s_re;
 };
 
 class Game

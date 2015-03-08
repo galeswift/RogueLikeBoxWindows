@@ -7,7 +7,7 @@
 //
 
 #include "Box2DSystem.h"
-#include "Components.h"
+#include "Box2DComponent.h"
 #include "Entity.h"
 #include "Game.h"
 
@@ -18,14 +18,14 @@ void Box2DSystem::Init(Game* owner)
     System::Init(owner);
     
     // Define the gravity vector.
-    b2Vec2 gravity(0.0f, 10.0f);
+    b2Vec2 gravity(0.0f, 20.0f);
     
     // Construct a world object, which will hold and simulate the rigid bodies.
     m_world = new b2World(gravity);
     
     // Define the ground body.
     b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(0.0f, 30.0f);
+    groundBodyDef.position.Set(0.0f, 5.0f);
     
     // Call the body factory which allocates memory for the ground body
     // from a pool and creates the ground box shape (also from a pool).
@@ -36,7 +36,7 @@ void Box2DSystem::Init(Game* owner)
     b2PolygonShape groundBox;
     
     // The extents are the half-widths of the box.
-    groundBox.SetAsBox(40, 10);
+    groundBox.SetAsBox(40, 5);
     
     // Define the ground box shape.
     b2PolygonShape groundBox2;
@@ -95,13 +95,12 @@ void Box2DSystem::Update(float dt)
     // Prepare for simulation. Typically we use a time step of 1/60 of a
     // second (60Hz) and 10 iterations. This provides a high quality simulation
     // in most game scenarios.
-    float32 timeStep = 1.0f / 60.0f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
+    int32 velocityIterations = 10;
+    int32 positionIterations = 10;
     
     // Instruct the world to perform a single step of simulation.
     // It is generally best to keep the time step and iterations fixed.
-    m_world->Step(timeStep, velocityIterations, positionIterations);
+    m_world->Step(dt, velocityIterations, positionIterations);
     
     Box2DComponent* playerComp = m_playerEntity->GetComponent<Box2DComponent>(NULL);
     b2Vec2 vel = playerComp->m_body->GetLinearVelocity();
@@ -124,34 +123,25 @@ void Box2DSystem::Update(float dt)
     {
         playerComp->m_body->ApplyLinearImpulse(b2Vec2(1,0), pos, true);
     }
-    
-    if (m_spawnInterval > .1f)
+   
+    if (m_spawnInterval > .01f)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
         {
             m_spawnInterval = 0.0f;
-            __AddCube(sf::Vector2f(0,3.0));
+            __AddCube(sf::Vector2f(0,-3.0));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
         {
             m_spawnInterval = 0.0f;
-            __AddCircle(sf::Vector2f(0,3.0));
+            __AddCircle(sf::Vector2f(0,-3.0));
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-        {
-            m_spawnInterval = 0.0f;
-            Box2DComponent::s_box2DScale += 10 * dt;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-        {
-            m_spawnInterval = 0.0f;
-            Box2DComponent::s_box2DScale -= 10 * dt;
-        }
+
     }
-    
-    for (std::vector<Box2DComponent*>::const_iterator it = Box2DComponent::Pool.GetComponents()->begin() ; it != Box2DComponent::Pool.GetComponents()->end() ; it++)
+    ComponentPool<Box2DComponent>::Iterator it(&Box2DComponent::Pool);
+    for (it.First() ; it.Current() ; it.Next())
     {
-        (*it)->Update(dt);
+        it.Current()->Update(dt);
     }
 }
 
@@ -167,7 +157,7 @@ void Box2DSystem::__AddCircle(const sf::Vector2f& pos)
     // Define another box shape for our dynamic body.
     b2CircleShape dynamicCircle;
     dynamicCircle.m_p.Set(pos.x,pos.y);
-    dynamicCircle.m_radius = 2;
+    dynamicCircle.m_radius = .5;
     
     // Define the dynamic body fixture.
     b2FixtureDef fixtureDef;
@@ -199,8 +189,8 @@ void Box2DSystem::__AddCube(const sf::Vector2f& pos)
     
     // Define another box shape for our dynamic body.
     b2PolygonShape dynamicBox;
-    float width = Random::Next(1.5f,6.0f);
-    float height = Random::Next(0.5f, 5.0f);
+    float width = Random::NextNormal(4.0f,1.0f);
+    float height = Random::NextNormal(10.0f, 3.0f);
     dynamicBox.SetAsBox(width,height);
     
     // Define the dynamic body fixture.

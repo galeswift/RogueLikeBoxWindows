@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include "Components.h"
 
+#define RAD_TO_DEG (57.2957795)
+#define DEG_TO_RAD (1/RAD_TO_DEG)
+
+
 class b2World;
 class b2Body;
 

@@ -7,10 +7,9 @@
 //
 
 #include "Box2DComponent.h"
-
 #include <Box2D/Box2D.h>
 
-float Box2DComponent::s_box2DScale = 10.0f;
+float Box2DComponent::s_box2DScale = 30.0f;
 
 IMPLEMENT_COMPONENT(Box2DComponent);
 
@@ -41,6 +40,8 @@ void Box2DComponent::Draw(sf::RenderWindow* window)
                 sf::CircleShape shape;
                 shape.setRadius(radius * s_box2DScale);
                 shape.setFillColor(sf::Color::Red);
+                shape.setOutlineColor(sf::Color::Yellow);
+                shape.setOutlineThickness(radius * s_box2DScale * .1f);
                 shape.setOrigin(radius * s_box2DScale, radius * s_box2DScale);
                 shape.setPosition(center.x*s_box2DScale,center.y*s_box2DScale);
                 window->draw(shape);
@@ -61,6 +62,8 @@ void Box2DComponent::Draw(sf::RenderWindow* window)
                     shape.setPoint(i, sf::Vector2f(s_box2DScale * poly->m_vertices[i].x,s_box2DScale * poly->m_vertices[i].y));
                 }
                 shape.setFillColor(sf::Color::White);
+                shape.setOutlineColor(sf::Color::Green);
+                shape.setOutlineThickness(2);
                 shape.setPosition(pos.x*s_box2DScale,pos.y*s_box2DScale);
                 shape.setRotation(RAD_TO_DEG * m_body->GetAngle());
                 window->draw(shape);

@@ -11,9 +11,12 @@
 #include "Entity.h"
 #include "System.h"
 #include "Box2DSystem.h"
+#include "DungeonSystem.h"
 #include "RenderingSystem.h"
 #include <stdio.h>
 
+std::random_device Random::s_rd;
+std::linear_congruential_engine<std::uint_fast32_t, 48271, 0, 2147483647> Random::s_re(Random::s_rd());
 Game::Game()
 {};
 
@@ -29,6 +32,7 @@ void Game::Init()
 {
     RegisterSystem(new Box2DSystem());
     RegisterSystem(new RenderingSystem());
+    RegisterSystem(new DungeonSystem());
 }
 
 void Game::Draw(sf::RenderWindow* window)

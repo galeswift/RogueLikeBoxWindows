@@ -45,6 +45,8 @@ int main(int argc, char** argv)
 
     sf::Clock deltaClock;
 
+    float accumulatedTime = 0.0f;
+    int commandFrame=0;
     // Start the game loop
     while (window.isOpen())
     {
@@ -63,8 +65,21 @@ int main(int argc, char** argv)
             }
         }
         
-        sf::Time dt = deltaClock.restart();
-        game.Update(dt.asSeconds());
+        accumulatedTime += deltaClock.getElapsedTime().asSeconds();
+        deltaClock.restart();
+       
+        static double UPDATE_INTERVAL = 1.0f/60.0f;
+        static double MAX_CYCLES_PER_FRAME = 10;
+        if (accumulatedTime > (MAX_CYCLES_PER_FRAME * UPDATE_INTERVAL)) {
+            accumulatedTime = MAX_CYCLES_PER_FRAME * UPDATE_INTERVAL;
+        }
+        
+        while (accumulatedTime>=UPDATE_INTERVAL)
+        {
+            accumulatedTime -= UPDATE_INTERVAL;
+            game.Update(UPDATE_INTERVAL);
+            commandFrame++;
+        }
         game.Draw(&window);
     }
 

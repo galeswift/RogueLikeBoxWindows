@@ -36,9 +36,42 @@ public:
             }
         }
     }
-    
-    const std::vector<T*>* GetComponents() { return &m_components; }
-    
+    class Iterator
+    {
+    public:
+        Iterator(ComponentPool* pool) : m_index(0), m_pool(pool)
+        {
+            
+        }
+        
+        T* First()
+        {
+            if( m_index < m_pool->m_components.size())
+            {
+                return m_pool->m_components.at(0);
+            }
+            return NULL;
+        }
+        
+        T* Current()
+        {
+            if( m_index < m_pool->m_components.size())
+            {
+                return m_pool->m_components.at(m_index);
+            }
+            return NULL;
+        }
+        
+        void Next()
+        {
+            m_index++;
+        }
+        
+    private:
+        size_t m_index;
+        ComponentPool* m_pool;
+    };
+ 
 private:
     std::vector<T*> m_components;
 };

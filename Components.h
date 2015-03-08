@@ -22,13 +22,15 @@ static ComponentPool<C> Pool;
 #define IMPLEMENT_COMPONENT(C) \
 ComponentPool<C> C::Pool
 
+class Entity;
+
 class Component
 {
 public:
+    virtual void Init(Entity* entity) {};
     virtual void Draw(sf::RenderWindow* window) {};
     virtual void Update(float f32) {};
     virtual void Remove() {};
-    
 };
 
 #endif /* defined(__RogueLikeBox__Components__) */
