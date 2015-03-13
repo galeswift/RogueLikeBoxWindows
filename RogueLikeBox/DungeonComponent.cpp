@@ -12,12 +12,13 @@
 #include "Game.h"
 
 IMPLEMENT_COMPONENT(DungeonComponent);
-#define CELL_THICKNESS 4
+#define CELL_THICKNESS 3
 #define CELL_COUNT_MIN 200
-#define CELL_COUNT_MAX 450
+#define CELL_COUNT_MAX 250
 #define CELL_MEAN 15
 #define CELL_RANGE 5
-#define CELL_ROOM_MIN (CELL_MEAN * 0.9)
+#define CELL_ROOM_MIN (CELL_MEAN * 0.95)
+#define CELL_RADIUS 50 * CELL_THICKNESS
 
 Cell::Cell() :
     m_velocity(0.0f,0.0f)
@@ -31,6 +32,10 @@ void Cell::AddForce(const sf::Vector2i &force)
     m_velocity.y += force.y;
 }
 
+bool Cell::IsRoom()
+{
+    return m_dimensions.x > CELL_ROOM_MIN && m_dimensions.y > CELL_ROOM_MIN;
+}
 void Cell::Update(float dt)
 {
     m_pos.x += m_velocity.x;
@@ -92,7 +97,7 @@ void DungeonComponent::DungeonGenerationState_Init::Init(DungeonComponent* comp)
         comp->m_cells.emplace_back();
         
         sf::Vector2i dimensions(sf::Vector2i(Random::NextNormal<float>(CELL_MEAN,CELL_RANGE), Random::NextNormal<float>(CELL_MEAN,CELL_RANGE)));
-        sf::Vector2i pos(sf::Vector2i(Random::Next(-100, 100), Random::Next(-100,100)));
+        sf::Vector2i pos(sf::Vector2i(Random::Next(-CELL_RADIUS, CELL_RADIUS), Random::Next(-CELL_RADIUS,CELL_RADIUS)));
         comp->m_cells[i].SetDimensions(dimensions);
         comp->m_cells[i].SetPos(pos);
     }
@@ -124,8 +129,6 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
                 {
                     finished = false;
                     sf::Vector2f fromCell = VectorMath::Sub(b->getOrigin(), a->getOrigin());
-                    sf::Vector2f fromCellN = VectorMath::Normalize(fromCell);
-                    float fromCellMag = VectorMath::Mag(fromCell);
                     sf::Vector2i force(0,0);
                     if (fromCell.x < 0)
                     {
@@ -146,8 +149,8 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
                     
                     if (fromCell.x == 0 && fromCell.y ==0)
                     {
-                        force.x = -1;
-                        force.y = 1;
+                        force.x = Random::Next(-1, 1);
+                        force.y = Random::Next(-1, 1);
                     }
                     m_owner->m_cells[i].AddForce(force);
                 }
@@ -157,13 +160,47 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
     
     if (finished)
     {
+        size_t cellCount = m_owner->m_cells.size();
+        for (int i=0 ; i<cellCount; i++)
+        {
+            if (m_owner->m_cells[i].IsRoom())
+            {
+                Cell newRoom = m_owner->m_cells[i];
+                m_owner->m_rooms.push_back(newRoom);
+            }
+        }
+        
         m_owner->SetState(new DungeonGenerationState_Triangulate());
     }
 }
 
-void DungeonComponent::DungeonGenerationState_Triangulate::Update(float dt)
+void DungeonComponent::DungeonGenerationState_Triangulate::Init(DungeonComponent* comp)
 {
+    DungeonComponent::DungeonGenerationState::Init(comp);
+    size_t roomCount = m_owner->m_rooms.size();
+    for (int i=0 ; i<roomCount; i++)
+    {
+        const sf::RectangleShape* renderShape = m_owner->m_rooms[i].GetShape();
+        m_vertices.insert(vertex(renderShape->getOrigin().x - renderShape->getSize().x/2.0f, renderShape->getOrigin().y - renderShape->getSize().y/2.0f));
+    }
+    m_delaunay.Triangulate(m_vertices, m_triangles);
+    m_delaunay.TrianglesToEdges(m_triangles, m_edges);
+}
+
+void DungeonComponent::DungeonGenerationState_Triangulate::Draw(sf::RenderWindow* window)
+{
+    sf::Vertex* linesToDraw = new sf::Vertex[m_edges.size() * 2];
+    int i=0 ;
+    for( edgeIterator it = m_edges.begin() ; it != m_edges.end() ; it++)
+    {
+        linesToDraw[i * 2 + 0] = sf::Vector2f(-(*it).m_pV0->GetX(),-(*it).m_pV0->GetY());
+        linesToDraw[i * 2 + 1] = sf::Vector2f(-(*it).m_pV1->GetX(),-(*it).m_pV1->GetY());
+        linesToDraw[i*2 + 0].color = sf::Color::Red;
+        linesToDraw[i*2 + 1].color = sf::Color::Red;
+        i++;
+    }
     
+   window->draw(linesToDraw, m_edges.size() * 2, sf::Lines);
 }
 
 DungeonComponent::DungeonComponent() :
@@ -183,6 +220,12 @@ void DungeonComponent::Draw(sf::RenderWindow* window)
     {
         m_cells[i].Draw(window);
     }
+    
+    if (m_state)
+    {
+        m_state->Draw(window);
+    }
+    
 }
 
 void DungeonComponent::Update(float dt)

@@ -13,6 +13,7 @@
 		531BD5251A9449D300038EB3 /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 531BD5241A9449D300038EB3 /* nice_music.ogg */; };
 		531BD5271A9449D300038EB3 /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 531BD5261A9449D300038EB3 /* sansation.ttf */; };
 		531BD5291A9449D300038EB3 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 531BD5281A9449D300038EB3 /* icon.png */; };
+		53C953E91AB161DC00C03C53 /* Delaunay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53C953E71AB161DC00C03C53 /* Delaunay.cpp */; };
 		53CE3F361A95B1D700D5C897 /* Box2DConfig.cmake.in in Resources */ = {isa = PBXBuildFile; fileRef = 53CE3ED01A95B1D700D5C897 /* Box2DConfig.cmake.in */; };
 		53CE3F371A95B1D700D5C897 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53CE3ED11A95B1D700D5C897 /* CMakeLists.txt */; };
 		53CE3F381A95B1D700D5C897 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53CE3ED31A95B1D700D5C897 /* b2BroadPhase.cpp */; };
@@ -85,6 +86,8 @@
 		531BD5241A9449D300038EB3 /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		531BD5261A9449D300038EB3 /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		531BD5281A9449D300038EB3 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		53C953E71AB161DC00C03C53 /* Delaunay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Delaunay.cpp; sourceTree = "<group>"; };
+		53C953E81AB161DC00C03C53 /* Delaunay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delaunay.h; sourceTree = "<group>"; };
 		53CE3ECF1A95B1D700D5C897 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		53CE3ED01A95B1D700D5C897 /* Box2DConfig.cmake.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Box2DConfig.cmake.in; sourceTree = "<group>"; };
 		53CE3ED11A95B1D700D5C897 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -236,6 +239,8 @@
 		531BD5191A9449D300038EB3 /* RogueLikeBox */ = {
 			isa = PBXGroup;
 			children = (
+				53C953E71AB161DC00C03C53 /* Delaunay.cpp */,
+				53C953E81AB161DC00C03C53 /* Delaunay.h */,
 				53D0F4511AA6E04300B12F80 /* VectorMath.cpp */,
 				53D0F4521AA6E04300B12F80 /* VectorMath.h */,
 				53D0F44E1AA38B8300B12F80 /* DungeonSystem.cpp */,
@@ -556,6 +561,7 @@
 				53CE3F521A95B1D700D5C897 /* b2CircleContact.cpp in Sources */,
 				53CE3F531A95B1D700D5C897 /* b2Contact.cpp in Sources */,
 				53D0F4411AA188E300B12F80 /* Entity.cpp in Sources */,
+				53C953E91AB161DC00C03C53 /* Delaunay.cpp in Sources */,
 				53CE3F5A1A95B1D700D5C897 /* b2FrictionJoint.cpp in Sources */,
 				53CE3F621A95B1D700D5C897 /* b2RopeJoint.cpp in Sources */,
 				53D0F44D1AA38B4800B12F80 /* DungeonComponent.cpp in Sources */,
@@ -698,6 +704,8 @@
 		531BD52D1A9449D300038EB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/,
@@ -713,6 +721,8 @@
 		531BD52E1A9449D300038EB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/,

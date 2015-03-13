@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "Components.h"
+#include "Delaunay.h"
 
 class DungeonComponent;
 
@@ -25,7 +26,7 @@ public:
     const sf::RectangleShape* GetShape() { return &m_renderShape; }
     const sf::FloatRect* GetGlobalBounds() { return &m_globalBounds; }
     void AddForce(const sf::Vector2i& force);
-    
+    bool IsRoom();
 private:
     void __UpdateRenderShape();
     sf::RectangleShape m_renderShape;
@@ -46,6 +47,7 @@ public:
     public:
         virtual void Init(DungeonComponent* comp) {m_owner = comp;} 
         virtual void Update(float dt) {};
+        virtual void Draw(sf::RenderWindow* window) {};
     protected:
         DungeonComponent* m_owner;
     };
@@ -65,7 +67,13 @@ public:
     class DungeonGenerationState_Triangulate : public DungeonGenerationState
     {
     public:
-        virtual void Update(float dt);
+        virtual void Init(DungeonComponent* comp);
+        virtual void Draw(sf::RenderWindow* window);
+    private:
+        Delaunay m_delaunay;
+        vertexSet m_vertices;
+        triangleSet m_triangles;
+        edgeSet m_edges;
     };
     
     DungeonComponent();
@@ -77,6 +85,7 @@ public:
 
  private:
     std::vector<Cell> m_cells;
+    std::vector<Cell> m_rooms;
     DungeonGenerationState* m_state;
 };
 
