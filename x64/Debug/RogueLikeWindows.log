@@ -1,0 +1,31 @@
+﻿Build started 8/2/2015 3:01:02 PM.
+     1>Project "C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\RogueLikeWindows.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I..\Box2D\v2.3.1\Box2D\ /I"..\SFML\SFML-2.3.1\include" /Zi /nologo /W3 /WX- /sdl /Od /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt DungeonComponent.cpp
+         DungeonComponent.cpp
+     1>DungeonComponent.cpp(28): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>DungeonComponent.cpp(54): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>DungeonComponent.cpp(106): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>DungeonComponent.cpp(107): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>DungeonComponent.cpp(128): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>DungeonComponent.cpp(223): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.exe" /INCREMENTAL /NOLOGO /LIBPATH:"../SFML/SFML-2.3.1/lib" /LIBPATH:../Box2D\v2.3.1\Box2D\Build\vs2013\bin\x64\Debug Box2D.lib opengl32.lib winmm.lib ws2_32.lib openal32.lib jpeg.lib freetype.lib "sfml-audio-s-d.lib" "sfml-graphics-s-d.lib" "sfml-main-d.lib" "sfml-network-s-d.lib" "sfml-system-s-d.lib" "sfml-window-s-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.lib" /MACHINE:X64 x64\Debug\Box2DComponent.obj
+         x64\Debug\Box2DSystem.obj
+         x64\Debug\ComponentPool.obj
+         x64\Debug\Components.obj
+         x64\Debug\Delaunay.obj
+         x64\Debug\DungeonComponent.obj
+         x64\Debug\DungeonSystem.obj
+         x64\Debug\Entity.obj
+         x64\Debug\Game.obj
+         x64\Debug\main.obj
+         x64\Debug\RenderingSystem.obj
+         x64\Debug\System.obj
+         x64\Debug\VectorMath.obj
+         RogueLikeWindows.vcxproj -> C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.exe
+     1>Done Building Project "C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\RogueLikeWindows.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.07

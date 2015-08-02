@@ -25,7 +25,7 @@ public:
 private:
     void __AddCube(const sf::Vector2f& pos);
     void __AddCircle(const sf::Vector2f& pos);
-    
+	void __InitTestBodies();
     b2World* m_world;
     float m_spawnInterval;
     Entity* m_playerEntity;

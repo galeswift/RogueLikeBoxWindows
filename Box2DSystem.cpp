@@ -23,66 +23,70 @@ void Box2DSystem::Init(Game* owner)
     // Construct a world object, which will hold and simulate the rigid bodies.
     m_world = new b2World(gravity);
     
-    // Define the ground body.
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(0.0f, 5.0f);
-    
-    // Call the body factory which allocates memory for the ground body
-    // from a pool and creates the ground box shape (also from a pool).
-    // The body is also added to the world.
-    b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
-    
-    // Define the ground box shape.
-    b2PolygonShape groundBox;
-    
-    // The extents are the half-widths of the box.
-    groundBox.SetAsBox(40, 5);
-    
-    // Define the ground box shape.
-    b2PolygonShape groundBox2;
-    b2PolygonShape groundBox3;
-    int count = 4;
-    b2Vec2 vertices[4];
-    vertices[0].Set(20, -30);
-    vertices[1].Set(30, -30);
-    vertices[2].Set(30, 0);
-    vertices[3].Set(20, 0);
-    
-    // The extents are the half-widths of the box.
-    groundBox2.Set(vertices,count);
-    
-    vertices[0].Set(-20, -30);
-    vertices[1].Set(-10, -30);
-    vertices[2].Set(-10, 0);
-    vertices[3].Set(-20, 0);
-    groundBox3.Set(vertices,count);
-    
-    // Add the ground fixture to the ground body.
-    groundBody->CreateFixture(&groundBox, 0.0f);
-    groundBody->CreateFixture(&groundBox2, 0.0f);
-    groundBody->CreateFixture(&groundBox3, 0.0f);
-    
-    Entity* groundEntity = GetOwner()->CreateEntity();
-    Box2DComponent* groundComponent = Box2DComponent::Pool.CreateComponent();
-    groundEntity->AddComponent(groundComponent);
-    groundComponent->m_body = groundBody;
-    
-    // Player entity
-    b2BodyDef playerBodyDef;
-    playerBodyDef.type = b2_dynamicBody;
-    playerBodyDef.position.Set(10,0);
-    b2Body* playerBody = m_world->CreateBody(&playerBodyDef);
-    playerBody->SetBullet(true);
-    
-    b2PolygonShape playerBodyShape;
-    playerBodyShape.SetAsBox(2, 4);
-    playerBody->CreateFixture(&playerBodyShape,0.0f);
-    
-    m_playerEntity = GetOwner()->CreateEntity();
-    Box2DComponent* playerCmp = Box2DComponent::Pool.CreateComponent();
-    m_playerEntity->AddComponent(playerCmp);
-    playerCmp->m_body = playerBody;
-    
+	//__InitTestBodies();
+}
+
+void Box2DSystem::__InitTestBodies()
+{
+	// Define the ground body.
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0.0f, 5.0f);
+
+	// Call the body factory which allocates memory for the ground body
+	// from a pool and creates the ground box shape (also from a pool).
+	// The body is also added to the world.
+	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
+
+	// Define the ground box shape.
+	b2PolygonShape groundBox;
+
+	// The extents are the half-widths of the box.
+	groundBox.SetAsBox(40, 5);
+
+	// Define the ground box shape.
+	b2PolygonShape groundBox2;
+	b2PolygonShape groundBox3;
+	int count = 4;
+	b2Vec2 vertices[4];
+	vertices[0].Set(20, -30);
+	vertices[1].Set(30, -30);
+	vertices[2].Set(30, 0);
+	vertices[3].Set(20, 0);
+
+	// The extents are the half-widths of the box.
+	groundBox2.Set(vertices, count);
+
+	vertices[0].Set(-20, -30);
+	vertices[1].Set(-10, -30);
+	vertices[2].Set(-10, 0);
+	vertices[3].Set(-20, 0);
+	groundBox3.Set(vertices, count);
+
+	// Add the ground fixture to the ground body.
+	groundBody->CreateFixture(&groundBox, 0.0f);
+	groundBody->CreateFixture(&groundBox2, 0.0f);
+	groundBody->CreateFixture(&groundBox3, 0.0f);
+
+	Entity* groundEntity = GetOwner()->CreateEntity();
+	Box2DComponent* groundComponent = Box2DComponent::Pool.CreateComponent();
+	groundEntity->AddComponent(groundComponent);
+	groundComponent->m_body = groundBody;
+
+	// Player entity
+	b2BodyDef playerBodyDef;
+	playerBodyDef.type = b2_dynamicBody;
+	playerBodyDef.position.Set(10, 0);
+	b2Body* playerBody = m_world->CreateBody(&playerBodyDef);
+	playerBody->SetBullet(true);
+
+	b2PolygonShape playerBodyShape;
+	playerBodyShape.SetAsBox(2, 4);
+	playerBody->CreateFixture(&playerBodyShape, 0.0f);
+
+	m_playerEntity = GetOwner()->CreateEntity();
+	Box2DComponent* playerCmp = Box2DComponent::Pool.CreateComponent();
+	m_playerEntity->AddComponent(playerCmp);
+	playerCmp->m_body = playerBody;
 }
 
 void Box2DSystem::Draw(sf::RenderWindow* window)
@@ -102,27 +106,30 @@ void Box2DSystem::Update(float dt)
     // It is generally best to keep the time step and iterations fixed.
     m_world->Step(dt, velocityIterations, positionIterations);
     
-    Box2DComponent* playerComp = m_playerEntity->GetComponent<Box2DComponent>(NULL);
-    b2Vec2 vel = playerComp->m_body->GetLinearVelocity();
-    b2Vec2 pos = playerComp->m_body->GetPosition();
-    
-    m_spawnInterval += dt;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        playerComp->m_body->ApplyLinearImpulse(b2Vec2(-1,0), pos, true);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        playerComp->m_body->ApplyLinearImpulse(b2Vec2(0,-1), pos, true);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        playerComp->m_body->ApplyLinearImpulse(b2Vec2(0,1), pos, true);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        playerComp->m_body->ApplyLinearImpulse(b2Vec2(1,0), pos, true);
-    }
+	if (m_playerEntity != NULL)
+	{
+		Box2DComponent* playerComp = m_playerEntity->GetComponent<Box2DComponent>(NULL);
+		b2Vec2 vel = playerComp->m_body->GetLinearVelocity();
+		b2Vec2 pos = playerComp->m_body->GetPosition();
+
+		m_spawnInterval += dt;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			playerComp->m_body->ApplyLinearImpulse(b2Vec2(-1, 0), pos, true);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			playerComp->m_body->ApplyLinearImpulse(b2Vec2(0, -1), pos, true);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			playerComp->m_body->ApplyLinearImpulse(b2Vec2(0, 1), pos, true);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			playerComp->m_body->ApplyLinearImpulse(b2Vec2(1, 0), pos, true);
+		}
+	}
    
     if (m_spawnInterval > .01f)
     {
