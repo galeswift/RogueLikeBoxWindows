@@ -22,6 +22,11 @@ struct Edge
 		return sameLink;
 	}
 
+	const bool operator !=(const Edge& other) const
+	{
+		return !(*this != other);
+	}
+
 	void Draw(sf::RenderWindow* window);
 	int m_from;
 	int m_to;
@@ -79,10 +84,11 @@ public:
     {
     public:
         virtual void Init(DungeonComponent* comp) {m_owner = comp;} 
-        virtual void Update(float dt) {};
+		virtual void Update(float dt) {m_delay -= dt;}
         virtual void Draw(sf::RenderWindow* window) {};
     protected:
         DungeonComponent* m_owner;
+		float m_delay;
     };
     
     class DungeonGenerationState_Init : public DungeonGenerationState
@@ -107,28 +113,22 @@ public:
         Delaunay m_delaunay;
         vertexSet m_vertices;
         triangleSet m_triangles;
-        edgeSet m_edges;
-        float m_timeRemaining;
+        edgeSet m_edges;        
     };
     
     class DungeonGenerationState_FindMST : public DungeonGenerationState
     {
     public:
         virtual void Init(DungeonComponent* comp);
-        virtual void Draw(sf::RenderWindow* window);
-        
-    private:
-        struct MSTVert
-        {
-            Cell* connectedRoom;
-            int keyValue;
-            std::vector<MSTVert> links;
-        };
-        
-        std::vector<MSTVert> mstVerts;
-        std::vector<MSTVert> mstSet;
+		virtual void Update(float dt);
     };
     
+	class DungeonGenerationState_AddExtraLinks : public DungeonGenerationState
+	{
+	public:
+		virtual void Init(DungeonComponent* comp);
+	};
+
     DungeonComponent();
     virtual void Init(Entity* entity);
     virtual void Draw(sf::RenderWindow* window);
@@ -136,8 +136,7 @@ public:
     virtual void SetState(DungeonGenerationState* state);
     DungeonGenerationState* GetState() { return m_state; }
 
-    std::vector<Cell> m_cells;
-	std::vector<Edge> m_edges;
+    std::vector<Cell> m_cells;	
 	std::vector<Edge> m_mstEdges;
     std::vector<Cell> m_rooms;
     DungeonGenerationState* m_state;

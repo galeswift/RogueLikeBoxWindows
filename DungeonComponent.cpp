@@ -13,12 +13,13 @@
 
 IMPLEMENT_COMPONENT(DungeonComponent);
 #define CELL_THICKNESS 3
-#define CELL_COUNT_MIN 300
-#define CELL_COUNT_MAX 500
-#define CELL_MEAN 15
-#define CELL_RANGE 5
-#define CELL_ROOM_MIN (CELL_MEAN * 0.95)
-#define CELL_RADIUS 75 * CELL_THICKNESS
+#define CELL_COUNT_MIN 750
+#define CELL_COUNT_MAX 1000
+#define CELL_MEAN 50
+#define CELL_RANGE 15
+#define CELL_ROOM_MIN (CELL_MEAN * 0.98)
+#define CELL_RADIUS 500 * CELL_THICKNESS
+#define EXTRA_EDGE_PERCENT (0.1)
 
 Cell::Cell() :
     m_velocity(0.0f,0.0f),
@@ -233,7 +234,7 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
 void DungeonComponent::DungeonGenerationState_Triangulate::Init(DungeonComponent* comp)
 {
     DungeonComponent::DungeonGenerationState::Init(comp);
-    m_timeRemaining=0.0f;
+    m_delay=3.0f;
     
     size_t roomCount = m_owner->m_rooms.size();
     for (int i=0 ; i<roomCount; i++)
@@ -279,9 +280,8 @@ void DungeonComponent::DungeonGenerationState_Triangulate::Draw(sf::RenderWindow
 
 void DungeonComponent::DungeonGenerationState_Triangulate::Update(float dt)
 {
-    m_timeRemaining -= dt;
-    
-    if (m_timeRemaining < 0 )
+	DungeonComponent::DungeonGenerationState::Update(dt);
+    if (m_delay < 0 )
     {
          m_owner->SetState(new DungeonGenerationState_FindMST());
     }
@@ -291,40 +291,6 @@ void DungeonComponent::DungeonGenerationState_FindMST::Init(DungeonComponent* co
 {
     DungeonComponent::DungeonGenerationState::Init(comp);
 	m_owner->m_mstEdges.clear();
-
-	/*Cell* currentCell = &m_owner->m_rooms[0];
-	for (int i = 0; i<m_owner->m_rooms.size(); i++)
-	{
-		Cell& roomA = m_owner->m_rooms[i];
-		for (int j = 0; j<m_owner->m_rooms[i].GetEdges().size(); j++)
-		{
-			const Edge& currentEdge = m_owner->m_rooms[i].GetEdges()[j];
-			Cell& roomB = m_owner->m_rooms[currentEdge.m_to];
-			int fromIdx = roomA.GetRoomIdx();
-			int toIdx = roomB.GetRoomIdx();
-			Edge newEdge;
-			newEdge.m_from = fromIdx;
-			newEdge.m_to = toIdx;
-			newEdge.m_owner = m_owner;
-			sf::Vector2i fromCell = VectorMath::Sub(roomA.GetPos(), roomB.GetPos());
-			newEdge.m_weight = VectorMath::Mag(fromCell);
-			bool skip = false;
-			for (int k = 0; k < m_owner->m_edges.size(); k++)
-			{
-				if (m_owner->m_edges[k] == newEdge)
-				{
-					skip = true;
-					break;
-				}
-			}
-
-			if (skip)
-			{
-				continue;
-			}
-			m_owner->m_edges.push_back(newEdge);
-		}
-	}*/
 
 	if (m_owner->m_rooms.size() > 0)
 	{
@@ -423,17 +389,50 @@ void DungeonComponent::DungeonGenerationState_FindMST::Init(DungeonComponent* co
 				currentCell = &m_owner->m_rooms[bestEdge.m_to];
 			}
 		}
+	}	
+
+	m_delay = 3.0f;
+}
+
+void DungeonComponent::DungeonGenerationState_FindMST::Update(float dt)
+{
+	DungeonComponent::DungeonGenerationState::Update(dt);
+	if (m_delay < 0)
+	{
+		m_owner->SetState(new DungeonGenerationState_AddExtraLinks());
 	}
 }
 
-
-void DungeonComponent::DungeonGenerationState_FindMST::Draw(sf::RenderWindow* window)
+void DungeonComponent::DungeonGenerationState_AddExtraLinks::Init(DungeonComponent* comp)
 {
-    size_t roomCount = m_owner->m_rooms.size();
-    for (int i=0 ; i<roomCount; i++)
-    {
-        const Cell& originalRoom = m_owner->m_rooms[i];
-    }
+	DungeonComponent::DungeonGenerationState::Init(comp);
+
+	for (int i=0 ; i<m_owner->m_rooms.size() ; i++)	
+	{
+		const Cell& currentCell = m_owner->m_rooms[i];
+		for (int j = 0; j < currentCell.GetEdges().size(); j++)
+		{
+			if (Random::Next<double>(0, 1.0) > EXTRA_EDGE_PERCENT)
+			{
+				continue;
+			}
+
+			const Edge& currentEdge = currentCell.GetEdges()[j];
+			bool exists=false;
+			for (int k=0 ; k<m_owner->m_mstEdges.size() ; k++)
+			{
+				if (m_owner->m_mstEdges[k] == currentEdge)
+				{
+					exists = true;
+				}
+			}
+
+			if (!exists)
+			{
+				m_owner->m_mstEdges.push_back(currentEdge);
+			}
+		}
+	}
 }
 
 DungeonComponent::DungeonComponent() :

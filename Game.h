@@ -29,6 +29,13 @@ public:
         return uniform_dist(s_re);
     }
     
+	template<>
+	static double Next(double min, double max)
+	{
+		std::uniform_real_distribution<double> uniform_dist(min, max);
+		return uniform_dist(s_re);
+	}
+
     template<class T>
     static T NextNormal(T mean, T range)
     {
