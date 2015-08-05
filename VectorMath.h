@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 
+#define R_PI (3.14159265358979323846)
+
 class VectorMath
 {
 public:
@@ -61,8 +63,15 @@ public:
     template <class T>
     static T Normalize(const T& a)
     {
-        float mag = Mag(a);
-        return T(a.x/mag, a.y/mag);
+        double mag = Mag(a);
+		if (mag > 0.0f)
+		{
+			return T(a.x/mag, a.y/mag);
+		}
+		else
+		{
+			return T(0.0f,0.0f);
+		}
     }
 };
 

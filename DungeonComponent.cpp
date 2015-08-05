@@ -12,14 +12,14 @@
 #include "Game.h"
 
 IMPLEMENT_COMPONENT(DungeonComponent);
-#define CELL_THICKNESS 3
-#define CELL_COUNT_MIN 750
-#define CELL_COUNT_MAX 1000
-#define CELL_MEAN 50
-#define CELL_RANGE 15
-#define CELL_ROOM_MIN (CELL_MEAN * 0.98)
-#define CELL_RADIUS 500 * CELL_THICKNESS
-#define EXTRA_EDGE_PERCENT (0.1)
+#define CELL_THICKNESS 35
+#define CELL_COUNT_MIN 250
+#define CELL_COUNT_MAX 500
+#define CELL_MEAN 15
+#define CELL_RANGE 4
+#define CELL_ROOM_MIN (CELL_MEAN * .99)
+#define CELL_RADIUS (CELL_COUNT_MAX/2)
+#define EXTRA_EDGE_PERCENT (.1)
 
 Cell::Cell() :
     m_velocity(0.0f,0.0f),
@@ -30,8 +30,9 @@ Cell::Cell() :
     
 }
 
-void Cell::AddForce(const sf::Vector2i &force)
+void Cell::AddForce(const sf::Vector2f &force)
 {
+	printf("Adding force[%f,%f]\n", force.x, force.y);
     m_velocity.x += force.x;
     m_velocity.y += force.y;
 }
@@ -51,7 +52,7 @@ void Cell::AddConnectedCell(Cell* other)
 	newEdge.m_from = GetRoomIdx();
 	newEdge.m_to = other->GetRoomIdx();
 	newEdge.m_owner = m_owner;
-	sf::Vector2i fromCell = VectorMath::Sub(GetPos(), other->GetPos());
+	sf::Vector2f fromCell = VectorMath::Sub(GetPos(), other->GetPos());
 	newEdge.m_weight = VectorMath::Mag(fromCell);
 	m_edges.push_back(newEdge);
 }
@@ -92,7 +93,7 @@ void Cell::SetDimensions(const sf::Vector2i& dimensions)
 }
 void Cell::SetPos(const sf::Vector2i& pos)
 {
-    m_pos = pos;
+    m_pos = sf::Vector2f(pos.x, pos.y);
     __UpdateRenderShape();
 }
 
@@ -120,14 +121,22 @@ void Cell::__UpdateRenderShape()
 void DungeonComponent::DungeonGenerationState_Init::Init(DungeonComponent* comp)
 {
     DungeonGenerationState::Init(comp);
-    
+	for ( int i=0 ; i< 1000 ; i++)
+	{
+		printf("[%f] ", Random::Next<double>(0.0, CELL_RADIUS));
+	}
+
+	printf ("\n");
     int numCells = Random::Next(CELL_COUNT_MIN,CELL_COUNT_MAX);
     for( int i=0 ; i<numCells ; i++)
     {
         comp->m_cells.emplace_back();
         
         sf::Vector2i dimensions(sf::Vector2i(Random::NextNormal<float>(CELL_MEAN,CELL_RANGE), Random::NextNormal<float>(CELL_MEAN,CELL_RANGE)));
-        sf::Vector2i pos(sf::Vector2i(Random::Next(-CELL_RADIUS, CELL_RADIUS), Random::Next(-CELL_RADIUS,CELL_RADIUS)));
+		double randAngle = Random::Next<double>(0.0, 2 * R_PI);
+		double randRadius = Random::Next<double>(0.0, CELL_RADIUS);
+		sf::Vector2f randPos(sin(randAngle) * randRadius, cos(randAngle) * randRadius);
+        sf::Vector2i pos(randPos);
         comp->m_cells[i].SetDimensions(dimensions);
         comp->m_cells[i].SetPos(pos);
 		comp->m_cells[i].SetOwner(comp);
@@ -143,7 +152,7 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
     size_t sizeB = m_owner->m_cells.size();
     for (int i=0 ; i<sizeA; i++)
     {
-		const Cell& cellA = m_owner->m_cells[i];
+		Cell& cellA = m_owner->m_cells[i];
 		if (cellA.IsDestroyed())
 		{
 			continue;
@@ -151,7 +160,7 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
 
         for (int j=0 ; j<sizeB ; j++)
         {
-			const Cell& cellB = m_owner->m_cells[j];
+			Cell& cellB = m_owner->m_cells[j];
 			if (cellB.IsDestroyed())
 			{
 				continue;
@@ -167,8 +176,8 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
                 
                 const sf::FloatRect* myBounds = cellA.GetGlobalBounds();
                 const sf::FloatRect* otherBounds = cellB.GetGlobalBounds();
-				if (abs(a->getOrigin().x - b->getOrigin().x) > (4 * (CELL_MEAN + CELL_RANGE)) ||
-					abs(a->getOrigin().y - b->getOrigin().y) > (4 * (CELL_MEAN + CELL_RANGE)) )
+				if (abs((int)(a->getOrigin().x - b->getOrigin().x)) > (2 * CELL_THICKNESS * (CELL_MEAN)) ||
+					abs((int)(a->getOrigin().y - b->getOrigin().y)) > (2 * CELL_THICKNESS * (CELL_MEAN)) )
 				{
 					continue;
 				}
@@ -177,31 +186,20 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
                 {
                     finished = false;
                     sf::Vector2f fromCell = VectorMath::Sub(b->getOrigin(), a->getOrigin());
-                    sf::Vector2i force(0,0);
-                    if (fromCell.x < 0)
-                    {
-                        force.x = 1;
-                    }
-                    else if (fromCell.x > 0)
-                    {
-                        force.x = -1;
-                    }
-                    if (fromCell.y < 0)
-                    {
-                        force.y = 1;
-                    }
-                    else if (fromCell.y > 0)
-                    {
-                        force.y = -1;
-                    }
-                    
+					printf("b[%d] origin was [%f,%f]\t",j, b->getOrigin().x, b->getOrigin().y);
+					printf("a[%d] origin was [%f,%f]\n",i, a->getOrigin().x, a->getOrigin().y);
+					fromCell = VectorMath::Normalize(fromCell);
+               
 					// Two rectangles sharing the same position
                     if (fromCell.x == 0 && fromCell.y ==0)
                     {
-						m_owner->m_cells[j].Destroy();
+						cellB.Destroy();
                     }
-                    m_owner->m_cells[i].AddForce(force);
-					break;
+					else
+					{
+						printf("fromCell is [%f,%f]\n", fromCell.x, fromCell.y);
+						cellA.AddForce(VectorMath::Mul(fromCell, -1.0/VectorMath::Mag(fromCell)));
+					}					
                 }
             }
         }
@@ -234,7 +232,7 @@ void DungeonComponent::DungeonGenerationState_Separate::Update(float dt)
 void DungeonComponent::DungeonGenerationState_Triangulate::Init(DungeonComponent* comp)
 {
     DungeonComponent::DungeonGenerationState::Init(comp);
-    m_delay=3.0f;
+    m_delay=0.5f;
     
     size_t roomCount = m_owner->m_rooms.size();
     for (int i=0 ; i<roomCount; i++)
@@ -289,6 +287,7 @@ void DungeonComponent::DungeonGenerationState_Triangulate::Update(float dt)
 
 void DungeonComponent::DungeonGenerationState_FindMST::Init(DungeonComponent* comp)
 {
+	m_delay = 0.5f;
     DungeonComponent::DungeonGenerationState::Init(comp);
 	m_owner->m_mstEdges.clear();
 
@@ -390,8 +389,6 @@ void DungeonComponent::DungeonGenerationState_FindMST::Init(DungeonComponent* co
 			}
 		}
 	}	
-
-	m_delay = 3.0f;
 }
 
 void DungeonComponent::DungeonGenerationState_FindMST::Update(float dt)
@@ -443,7 +440,15 @@ DungeonComponent::DungeonComponent() :
 void DungeonComponent::Init(Entity *entity)
 {
     Component::Init(entity);
-    SetState(new DungeonGenerationState_Init());
+	Reset();
+}
+
+void DungeonComponent::Reset()
+{
+	m_cells.clear();
+	m_rooms.clear();
+	m_mstEdges.clear();
+	SetState(new DungeonGenerationState_Init());
 }
 
 void DungeonComponent::Draw(sf::RenderWindow* window)

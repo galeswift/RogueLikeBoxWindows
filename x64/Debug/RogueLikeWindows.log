@@ -1,25 +1,24 @@
-﻿Build started 8/2/2015 11:23:28 PM.
+﻿Build started 8/5/2015 12:27:34 AM.
      1>Project "C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\RogueLikeWindows.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I..\Box2D\v2.3.1\Box2D\ /I"..\SFML\SFML-2.3.1\include" /Zi /nologo /W3 /WX- /sdl /Od /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Box2DSystem.cpp Components.cpp DungeonComponent.cpp DungeonSystem.cpp Game.cpp RenderingSystem.cpp System.cpp main.cpp
-         main.cpp
-     1>main.cpp(32): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>main.cpp(74): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(79): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(80): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         System.cpp
-         RenderingSystem.cpp
-         Game.cpp
-         DungeonSystem.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I..\Box2D\v2.3.1\Box2D\ /I"..\SFML\SFML-2.3.1\include" /Zi /nologo /W3 /WX- /sdl /Od /D _CRT_SECURE_NO_WARNINGS /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt DungeonComponent.cpp VectorMath.cpp
          DungeonComponent.cpp
-     1>DungeonComponent.cpp(29): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>DungeonComponent.cpp(55): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>DungeonComponent.cpp(107): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>DungeonComponent.cpp(56): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>DungeonComponent.cpp(96): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
      1>DungeonComponent.cpp(108): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>DungeonComponent.cpp(129): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>DungeonComponent.cpp(224): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
-         Components.cpp
-         Box2DSystem.cpp
+     1>DungeonComponent.cpp(135): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>DungeonComponent.cpp(138): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>DungeonComponent.cpp(201): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>DungeonComponent.cpp(222): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data
+     1>c:\users\keith\documents\visual studio 2015\projects\roguelikebox\VectorMath.h(69): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+                 DungeonComponent.cpp(191) : see reference to function template instantiation 'T VectorMath::Normalize<sf::Vector2f>(const T &)' being compiled
+                 with
+                 [
+                     T=sf::Vector2f
+                 ]
+         Generating Code...
+         Compiling...
+         VectorMath.cpp
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.exe" /INCREMENTAL /NOLOGO /LIBPATH:"../SFML/SFML-2.3.1/lib" /LIBPATH:../Box2D\v2.3.1\Box2D\Build\vs2013\bin\x64\Debug Box2D.lib opengl32.lib winmm.lib ws2_32.lib openal32.lib jpeg.lib freetype.lib "sfml-audio-s-d.lib" "sfml-graphics-s-d.lib" "sfml-main-d.lib" "sfml-network-s-d.lib" "sfml-system-s-d.lib" "sfml-window-s-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.lib" /MACHINE:X64 x64\Debug\Box2DComponent.obj
@@ -35,62 +34,9 @@
          x64\Debug\RenderingSystem.obj
          x64\Debug\System.obj
          x64\Debug\VectorMath.obj
-     1>sfml-graphics-s-d.lib(BlendMode.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Color.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Font.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(GLCheck.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(GLExtensions.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Image.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(ImageLoader.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderStates.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderTarget.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RenderWindow.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Shader.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Texture.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(TextureSaver.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Transform.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Transformable.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(View.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Vertex.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(GLLoader.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Shape.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(CircleShape.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(RectangleShape.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(ConvexShape.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(Text.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-graphics-s-d.lib(VertexArray.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(Clock.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(Err.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(Lock.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(Mutex.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(Sleep.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(String.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(ThreadLocal.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(Time.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(ClockImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(MutexImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(SleepImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-system-s-d.lib(ThreadLocalImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(Context.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(GlContext.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(GlResource.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(Joystick.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(JoystickManager.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(Keyboard.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(SensorManager.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(VideoMode.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(Window.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(WindowImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(WglContext.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(WglExtensions.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(InputImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(JoystickImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(SensorImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : warning LNK4204: 'C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
          RogueLikeWindows.vcxproj -> C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\x64\Debug\RogueLikeWindows.exe
      1>Done Building Project "C:\Users\Keith\Documents\Visual Studio 2015\Projects\RogueLikeBox\RogueLikeWindows.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:05.09
+Time Elapsed 00:00:01.99

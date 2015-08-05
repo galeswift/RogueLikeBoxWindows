@@ -40,6 +40,7 @@ int main(int argc, char** argv)
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
+	freopen("log.txt","w", stdout);
     Game game;
     game.Init();
 

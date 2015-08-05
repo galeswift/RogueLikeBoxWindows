@@ -16,6 +16,7 @@ class RenderingSystem : public System
 {
 public:
     RenderingSystem();
+	virtual void Init(Game* owner);
     virtual void Draw(sf::RenderWindow* window);
     virtual void Update(float dt);
     

@@ -38,4 +38,13 @@ void DungeonSystem::Update(float dt)
 			it.Current()->SetState(new DungeonComponent::DungeonGenerationState_FindMST());
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+	{
+		ComponentPool<DungeonComponent>::Iterator it(&DungeonComponent::Pool);
+		for (it.First(); it.Current(); it.Next())
+		{
+			it.Current()->Reset();
+		}
+	}
 }

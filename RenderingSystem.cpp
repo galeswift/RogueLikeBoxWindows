@@ -17,11 +17,18 @@ RenderingSystem::RenderingSystem() :
     m_currentZoom(1.0f)
 {
 }
+
+void RenderingSystem::Init(Game* owner)
+{
+	System::Init(owner);
+}
+
 void RenderingSystem::Draw(sf::RenderWindow* window)
 {
     if (!m_viewInitialized)
     {
         m_defaultView = window->getDefaultView();
+		m_defaultView.zoom(50.0f);
         m_viewInitialized = true;
     }
     else

@@ -45,11 +45,11 @@ public:
     void SetColor(const sf::Color& color);
     const sf::RectangleShape* GetShape() const { return &m_renderShape; }
     const sf::FloatRect* GetGlobalBounds() const { return &m_globalBounds; }
-    void AddForce(const sf::Vector2i& force);
+    void AddForce(const sf::Vector2f& force);
     void AddConnectedCell(Cell* other);
     bool IsRoom() const;
     void SetRoomIdx(int val) { m_roomIdx = val; }
-	const sf::Vector2i& GetPos() const { return m_pos;  }
+	const sf::Vector2f& GetPos() const { return m_pos;  }
     int GetRoomIdx() const { return m_roomIdx; }
     int GetWeight() const { return m_weight; }
     void SetWeight(int val) { m_weight = val; }
@@ -63,8 +63,8 @@ private:
     void __UpdateRenderShape();
     sf::RectangleShape m_renderShape;
     sf::Vector2i m_dimensions;
-    sf::Vector2i m_pos; // gridPos
-    sf::Vector2i m_velocity;
+    sf::Vector2f m_pos; // gridPos
+    sf::Vector2f m_velocity;
     sf::FloatRect m_globalBounds;
     sf::Color m_color;
 	std::vector<Edge> m_edges;
@@ -131,6 +131,7 @@ public:
 
     DungeonComponent();
     virtual void Init(Entity* entity);
+	virtual void Reset();
     virtual void Draw(sf::RenderWindow* window);
     virtual void Update(float dt);
     virtual void SetState(DungeonGenerationState* state);
